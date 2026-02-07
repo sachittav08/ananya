@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Ananya 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Baloo 2', cursive;
+}
+
+/* ================= BACKGROUND ================= */
+body {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #ffd6e8, #fbc2eb, #e0c3fc);
+  background-size: 300% 300%;
+  animation: bgMove 15s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ================= FLOATING DECOR ================= */
+.float {
+  position: fixed;
+  animation: floatUp linear infinite;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(110vh); opacity: 0; }
+  10% { opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* ================= CARD ================= */
+.card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(16px);
+  width: 92%;
+  max-width: 440px;
+  border-radius: 30px;
+  padding: 26px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.18);
+  z-index: 2;
+}
+
+h1 { color: #ff4f9a; margin-bottom: 8px; }
+h2 { color: #ff5fa2; margin: 18px 0; }
+p  { color: #ff77b7; margin-bottom: 12px; }
+
+/* ================= CAROUSEL (FIXED & CENTERED) ================= */
+.carousel-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 16px 0 22px;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  height: 700px;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.carousel img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1.2s ease, transform 3s ease;
+}
+
+.carousel img.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ================= BUTTONS ================= */
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.yes {
+  background: #ff4f9a;
+  color: white;
+  box-shadow: 0 12px 25px rgba(255,79,154,0.45);
+  animation: heartbeat 1.4s infinite;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.05); }
+  40% { transform: scale(0.97); }
+  60% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+.no {
+  position: fixed;
+  background: white;
+  color: #ff4f9a;
+  border: 2px solid #ff9ecb;
+  z-index: 999;
+}
+
+/* ================= CONFETTI ================= */
+.confetti {
+  position: fixed;
+  font-size: 24px;
+  animation: fall 3.2s linear forwards;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  from { transform: translateY(-20vh); opacity: 1; }
+  to   { transform: translateY(110vh); opacity: 0; }
+}
+
+/* ================= HIDDEN SCREENS ================= */
+#celebrate, #final {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="music.mp3" preload="auto"></audio>
+
+<!-- MAIN -->
+<div class="card" id="main">
+  <h1>Hey Ananya 💕</h1>
+  <p>I made this just for you</p>
+
+  <div class="carousel-wrapper">
+    <div class="carousel">
+      <img src="photo1.jpg" class="active">
+      <img src="photo2.jpg">
+      <img src="photo3.jpg">
+      <img src="photo4.jpg">
+    </div>
+  </div>
+
+  <h2>Will you be my Valentine? 🌷</h2>
+  <button class="yes" onclick="sayYes()">YES 💖</button>
+</div>
+
+<button class="no" id="noBtn">No 🙈</button>
+
+<!-- CELEBRATE -->
+<div class="card" id="celebrate">
+  <h1>YAYYYYY 🧸💞</h1>
+  <p>You just made me really really happy</p>
+</div>
+
+<!-- FINAL -->
+<div class="card" id="final">
+  <h1>💖 Ananya 💖</h1>
+  <p>You are my favorite person.</p>
+  <p>Thank you for choosing me.</p>
+  <p>Happy Valentine’s Day 🌸</p>
+</div>
+
+<script>
+/* FLOATING HEARTS */
+for(let i=0;i<22;i++){
+  const f=document.createElement('div');
+  f.className='float';
+  f.innerText=['💖','✨','💕'][Math.floor(Math.random()*3)];
+  f.style.left=Math.random()*100+'vw';
+  f.style.fontSize=14+Math.random()*24+'px';
+  f.style.animationDuration=8+Math.random()*8+'s';
+  f.style.animationDelay=Math.random()*10+'s';
+  document.body.appendChild(f);
+}
+
+/* CAROUSEL */
+let index=0;
+const slides=document.querySelectorAll('.carousel img');
+setInterval(()=>{
+  slides[index].classList.remove('active');
+  index=(index+1)%slides.length;
+  slides[index].classList.add('active');
+},2800);
+
+/* NO BUTTON */
+const noBtn=document.getElementById('noBtn');
+function moveNo(){
+  noBtn.style.left=Math.random()*(window.innerWidth-90)+'px';
+  noBtn.style.top=Math.random()*(window.innerHeight-50)+'px';
+}
+noBtn.addEventListener('mouseenter',moveNo);
+noBtn.addEventListener('touchstart',moveNo);
+moveNo();
+
+/* CONFETTI */
+function confetti(){
+  for(let i=0;i<70;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.innerText=['💖','✨','🥰','💕'][Math.floor(Math.random()*4)];
+    c.style.left=Math.random()*100+'vw';
+    c.style.animationDelay=Math.random()*0.4+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3200);
+  }
+}
+
+/* YES */
+function sayYes(){
+  document.getElementById('main').style.display='none';
+  noBtn.style.display='none';
+  document.getElementById('celebrate').style.display='block';
+
+  const music=document.getElementById('music');
+  music.volume=0;
+  music.play();
+  let v=0;
+  const fade=setInterval(()=>{
+    v+=0.02;
+    music.volume=v;
+    if(v>=0.6) clearInterval(fade);
+  },100);
+
+  confetti();
+
+  setTimeout(()=>{
+    document.getElementById('celebrate').style.display='none';
+    document.getElementById('final').style.display='block';
+    confetti();
+  },3500);
+}
+
+/* SAFETY PLAY */
+document.body.addEventListener('click',()=>{
+  document.getElementById('music').play().catch(()=>{});
+},{once:true});
+</script>
+
+</body>
+</html>
